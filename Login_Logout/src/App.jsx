@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
-
+import "./App.css";
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <div>
-      {isLogged ? <Logout onClick={onClick}  /> : <Login onClick={onClick} />}
+      {isLogged ? <Logout onClick={onClick} /> : <Login onClick={onClick} />}
     </div>
   );
 }

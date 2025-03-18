@@ -1,0 +1,18 @@
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 150px;
+}
+
+.btnCheck {
+  align-self: start;
+}
+
+.borderB {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.353);
+}
