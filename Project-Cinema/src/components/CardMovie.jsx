@@ -1,10 +1,16 @@
 import { StarIcon } from "@heroicons/react/16/solid";
 import { HeartIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router";
+import { toggleFavoriteReducer } from "../redux/favoritesSlice";
 
-function CardMovie({ onClick, movie, favorites }) {
+function CardMovie({ movie }) {
+
+  const favorites = useSelector((state) => state.favorite.favorites);
+  const dispatch = useDispatch();
+
   const isFavorite = favorites.some(
     (favoritesMovie) => favoritesMovie.id === movie.id
   );
@@ -14,7 +20,7 @@ function CardMovie({ onClick, movie, favorites }) {
   );
 
   return (
-    <div className=" relative group  w-[200px] h-[300px] sm:w-[150px] sm:h-[250px] md:w-[180px] md:h-[280px]">
+    <div className="mx-auto  relative group  w-[200px] h-[300px] sm:w-[150px] sm:h-[250px] md:w-[180px] md:h-[280px] ">
       <Link to={`/detail/${movie.id}`}>
         <img
           src={img}
@@ -28,7 +34,11 @@ function CardMovie({ onClick, movie, favorites }) {
         group-hover:opacity-70 duration-300
       "
         >
-          <h2 className="text-white font-bold">{movie.title}</h2>
+          <h2 className="text-white font-bold">
+            {movie.title.length > 15
+              ? `${movie.title.slice(0, 15)}...`
+              : movie.title}
+          </h2>
           <p className="text-white font-bold my-1">{movie.release_date}</p>
           <p className="text-white opacity-100 text-xs">
             {movie.overview.length > 150
@@ -46,7 +56,7 @@ function CardMovie({ onClick, movie, favorites }) {
 
       <button
         className=" absolute cursor-pointer bottom-2  right-2 "
-        onClick={() => onClick(movie)}
+        onClick={() => dispatch(toggleFavoriteReducer(movie))}
       >
         <HeartIcon
           className={`h-6 w-6 ${isFavorite ? "text-red-600" : "text-white"}`}

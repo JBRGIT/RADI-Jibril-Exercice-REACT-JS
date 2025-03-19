@@ -66,7 +66,7 @@ function DetailMovie({ movie }) {
         <span className="text-green-600 text-md font-bold mr-3 ">
           Overview:
         </span>
-        {movie.overview}
+        {movie.overview.length === 0 ? "Non spécifié" : movie.overview}
       </div>
     </div>
   );

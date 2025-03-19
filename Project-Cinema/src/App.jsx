@@ -7,22 +7,18 @@ import DetailView from "./views/DetailView";
 import Navbar from "./components/navbar/Navbar";
 import { useState } from "react";
 
-
 function App() {
   // STATE :
 
   const [movies, setMovies] = useState([]);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  );
 
   const [inputValue, setInputValue] = useState("");
 
   // ----   useEffect :
-
+  // /discover/movie?include_adult=false
   useEffect(() => {
     if (!inputValue) {
-      apiMovie.get("/discover/movie").then((res) => {
+      apiMovie.get("/trending/movie/week").then((res) => {
         setMovies(res.data.results);
       });
     } else {
@@ -34,51 +30,17 @@ function App() {
     }
   }, [inputValue]);
 
-
-
-
   //------- LOCAL STORAGE :
 
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
   //---------- FUNCTIONS :
-
-  const toggleFavorite = (movie) => {
-    if (favorites.findIndex((element) => element.id === movie.id) === -1) {
-      setFavorites([...favorites, movie]);
-    } else {
-      setFavorites(favorites.filter((element) => movie.id !== element.id));
-    }
-  };
 
   return (
     <BrowserRouter>
       <Navbar setInputValue={setInputValue} inputValue={inputValue} />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <HomeView
-              onClick={toggleFavorite}
-              movies={movies}
-              favorites={favorites}
-            />
-          }
-        />
-        <Route
-          path="/favorite"
-          element={
-            <FavoriteView favorites={favorites} onClick={toggleFavorite} />
-          }
-        />
-        <Route
-          path="/detail/:id"
-          element={
-            <DetailView favorites={favorites} onClick={toggleFavorite} />
-          }
-        />
+        <Route path="/" element={<HomeView movies={movies} />} />
+        <Route path="/favorite" element={<FavoriteView />} />
+        <Route path="/detail/:id" element={<DetailView />} />
       </Routes>
     </BrowserRouter>
   );
