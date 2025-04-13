@@ -2,6 +2,7 @@ import { HeartIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavoriteReducer } from "../../redux/favoritesSlice";
+import { useEffect } from "react";
 
 function PosterDetail({ movie }) {
   const favorites = useSelector((state) => state.favorite.favorites);
@@ -11,16 +12,20 @@ function PosterDetail({ movie }) {
   );
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setImg(`https://image.tmdb.org/t/p/original${movie.poster_path}`);
+  }, [movie.poster_path]);
+
   const [img, setImg] = useState(
     `https://image.tmdb.org/t/p/original${movie.poster_path}`
   );
 
   return (
-    <div className="relative w-[60%] h-auto basis-1/3 ">
+    <div className="relative  ">
       <img
         src={img}
         alt="img"
-        className="rounded-lg w-full h-full object-cover "
+        className="rounded-lg  object-cover lg:w-[70%] "
         onError={() => setImg("https://placehold.co/200@2x.png")}
       />
 
@@ -29,7 +34,9 @@ function PosterDetail({ movie }) {
         onClick={() => dispatch(toggleFavoriteReducer(movie))}
       >
         <HeartIcon
-          className={`h-6 w-6 ${isFavorite ? "text-red-600" : "text-white"}`}
+          className={`h-6 w-6 md:h-8 md:w-8  lg:h-12 lg:w-12 ${
+            isFavorite ? "text-red-600" : "text-white"
+          }`}
         />
       </button>
     </div>

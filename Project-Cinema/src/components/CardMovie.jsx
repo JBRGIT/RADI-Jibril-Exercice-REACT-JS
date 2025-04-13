@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 import { toggleFavoriteReducer } from "../redux/favoritesSlice";
 
-function CardMovie({ movie }) {
-
+function CardMovie({ movie, className = "" }) {
   const favorites = useSelector((state) => state.favorite.favorites);
   const dispatch = useDispatch();
 
@@ -20,37 +19,40 @@ function CardMovie({ movie }) {
   );
 
   return (
-    <div className="mx-auto  relative group  w-[200px] h-[300px] sm:w-[150px] sm:h-[250px] md:w-[180px] md:h-[280px] ">
+    <div className={`${className} relative group mx-auto`}>
       <Link to={`/detail/${movie.id}`}>
-        <img
-          src={img}
-          alt="img"
-          className="rounded-lg  w-full h-full object-cover opacity-75 "
-          onError={() => setImg("https://placehold.co/200@2x.png")}
-        />
-
-        <div
-          className="ease-in absolute inset-0  px-4 py-3 rounded-lg opacity-0 group-hover:bg-black group-hover:border-6 group-hover:border-transparent 
-        group-hover:opacity-70 duration-300
+        <div className="relative w-full h-full overflow-hidden rounded-lg ">
+          <img
+            src={img}
+            alt="img"
+            className=" w-full h-full object-cover opacity-75 "
+            onError={() => setImg("https://placehold.co/200@2x.png")}
+          />
+          <div
+            className="ease-in absolute inset-0  px-2 py-1 md:px-4 md:py-3 rounded-lg opacity-0 group-hover:bg-black group-hover:border-5 group-hover:border-transparent 
+        group-hover:opacity-70 duration-300 
       "
-        >
-          <h2 className="text-white font-bold">
-            {movie.title.length > 15
-              ? `${movie.title.slice(0, 15)}...`
-              : movie.title}
-          </h2>
-          <p className="text-white font-bold my-1">{movie.release_date}</p>
-          <p className="text-white opacity-100 text-xs">
-            {movie.overview.length > 150
-              ? `${movie.overview.slice(0, 150)}...`
-              : movie.overview}
-          </p>
-          {Math.ceil(movie.vote_average * 10) === 0 ? null : (
-            <div className=" inline-flex items-center gap-1 absolute text-white font-bold bottom-1 ">
-              <StarIcon className="text-amber-300 h-3" />
-              {Math.ceil(movie.vote_average * 10)}%
-            </div>
-          )}
+          >
+            <h2 className="text-white font-bold text-xs md:text-base">
+              {movie.title.length > 15
+                ? `${movie.title.slice(0, 15)}...`
+                : movie.title}
+            </h2>
+            <p className="text-white font-bold my-1  text-xs md:text-sm">
+              {movie.release_date}
+            </p>
+            <p className="text-white opacity-100 text-[8px]  sm:text-[10px]">
+              {movie.overview.length > 100
+                ? `${movie.overview.slice(0, 100)}...`
+                : movie.overview}
+            </p>
+            {Math.ceil(movie.vote_average * 10) === 0 ? null : (
+              <div className=" inline-flex items-center gap-1 absolute text-white font-bold bottom-1 text-xs ">
+                <StarIcon className="text-amber-300 h-3" />
+                {Math.ceil(movie.vote_average * 10)}%
+              </div>
+            )}
+          </div>
         </div>
       </Link>
 
@@ -59,7 +61,7 @@ function CardMovie({ movie }) {
         onClick={() => dispatch(toggleFavoriteReducer(movie))}
       >
         <HeartIcon
-          className={`h-6 w-6 ${isFavorite ? "text-red-600" : "text-white"}`}
+          className={`h-4 w-4 ${isFavorite ? "text-red-600" : "text-white"}`}
         />
       </button>
     </div>
