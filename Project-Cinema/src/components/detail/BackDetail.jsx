@@ -20,9 +20,9 @@ function BackDetail({ id }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3000,
     autoplay: true,
-    // nextArrow:
+    
   };
 
   if (!movieImages.length) {

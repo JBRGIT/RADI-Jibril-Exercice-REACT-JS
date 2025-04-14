@@ -34,7 +34,7 @@ function PosterDetail({ movie }) {
         onClick={() => dispatch(toggleFavoriteReducer(movie))}
       >
         <HeartIcon
-          className={`h-6 w-6 md:h-8 md:w-8  lg:h-12 lg:w-12 ${
+          className={`h-6 w-6 md:h-8 md:w-8   ${
             isFavorite ? "text-red-600" : "text-white"
           }`}
         />
